@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview</title>
+</head>
+<body>
+    <h1>Interview</h1>
+    <button id="startInterviewButton">Start Interview</button>
+    <p>Question: {{ interview_data.current_question }}</p>
+    <p id="transcript"></p>
+    <label for="answer">Your Answer:</label><br>
+    <textarea id="answer" name="answer" rows="4" cols="50"></textarea><br><br>
+    <button id="nextQuestionButton">Next Question</button>
+    <button id="endInterviewButton">End Interview</button>
+    <audio id="questionAudio" controls></audio>
+    <script src="static/interview.js"></script>
+</body>
+</html>

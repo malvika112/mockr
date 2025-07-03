@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview Feedback</title>
+</head>
+<body>
+    <h1>Interview Feedback</h1>
+    <h2>Overall Score: {{ interview_data.overall_interview_score }}/100</h2>
+    <h2>Improvements Feedback Score: {{ interview_data.improvement_feedback_score }}/10</h2>
+    <p>Summary of Strengths and Areas for Improvement: {{ interview_data.llm_generated_overall_summary }}</p>
+    <h3>Question & Answer History:</h3>
+    {% for qa in interview_data.qa_history %}
+        <p><b>Question:</b> {{ qa.question }}</p>
+        <p><b>Answer:</b> {{ qa.answer }}</p>
+        <p><b>Score:</b> {{ qa.question_score }}/10</p>
+        <p><b>Critique:</b> {{ qa.critique }}</p>
+        <hr>
+    {% endfor %}
+</body>
+</html>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/Users/malvika/Desktop/mockr/venv/bin/python3.12
+=======
+#!/Users/malvika/mockr/venv/bin/python3.12
+>>>>>>> 5810eeea8f405bf23b88d0a3cf145ea468167fc9
 """A command line tool for extracting text and images from PDF and
 output it to plain text, html, xml or tags.
 """

@@ -33,7 +33,11 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 set -gx VIRTUAL_ENV "/Users/malvika/Desktop/mockr/venv"
+=======
+set -gx VIRTUAL_ENV "/Users/malvika/mockr/venv"
+>>>>>>> 5810eeea8f405bf23b88d0a3cf145ea468167fc9
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
