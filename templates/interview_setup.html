@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Setup</title>
+</head>
+<body>
+    <h2>Interview Setup</h2>
+    <form method="post" action="/interview_setup" enctype="multipart/form-data">
+        <input type="text" name="job_title" placeholder="Job Title" required><br>
+        <input type="text" name="job_position" placeholder="Job Position" required><br>
+        <input type="text" name="exp_level" placeholder="Experience Level" required><br>
+        <textarea name="job_description" placeholder="Job Description" required></textarea><br>
+        <input type="file" name="resume_pdf" accept=".pdf" required><br>
+        <select name="interview_stage" required>
+            <option value="Technical">Technical</option>
+            <option value="Behavioral">Behavioral</option>
+            <option value="HR">HR</option>
+        </select><br>
+        <button type="submit">Start Interview</button>
+    </form>
+</body>
+</html>
