@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview History</title>
+</head>
+<body>
+    <h1>Interview History</h1>
+    <ul>
+        {% for qa in qa_history %}
+            <li>
+                <h2>Question:</h2>
+                <p>{{ qa.question }}</p>
+                <h2>Answer:</h2>
+                <p>{{ qa.answer }}</p>
+                <h2>Score:</h2>
+                <p>{{ qa.score }}</p>
+                <h2>Critique:</h2>
+                <p>{{ qa.critique }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

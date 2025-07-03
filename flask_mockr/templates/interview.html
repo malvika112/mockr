@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview</title>
+</head>
+<body>
+    <h1>Interview</h1>
+    <h2>Question:</h2>
+    <p id="question">{{ question }}</p>
+
+    <button id="listen_button">Listen to Question</button><br><br>
+
+    <label for="answer">Your Answer:</label><br>
+    <textarea id="answer" name="answer" rows="10" cols="80"></textarea><br><br>
+
+    <button id="start_button">Start Speaking</button>
+    <button id="stop_button" disabled>Stop Speaking</button>
+    <button id="next_button">Next Question</button>
+    <button id="end_button">End Interview</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startButton = document.getElementById('start_button');
+            const stopButton = document.getElementById('stop_button');
+            const listenButton = document.getElementById('listen_button');
+            const answerTextarea = document.getElementById('answer');
+            const nextButton = document.getElementById('next_button');
+            const endButton = document.getElementById('end_button');
+
+            let recognition;
+            let isRecognizing = false;
+            let recognitionTimeout;
+
+            // Function to speak the question
+            function speak(text) {
+                const synth = window.speechSynthesis;
+                const utterance = new SpeechSynthesisUtterance(text);
+                synth.speak(utterance);
+            }
+
+            listenButton.addEventListener('click', () => {
+                const questionText = document.querySelector('#question').textContent;
+                speak(questionText);
+            });
+
+            // Automatically speak the question when the page loads
+            const initialQuestion = document.querySelector('#question').textContent;
+            speak(initialQuestion);
+
+            startButton.addEventListener('click', () => {
+                // Check if the SpeechRecognition API is supported
+                if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                    // Use SpeechRecognition API
+                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+                    recognition.continuous = false;
+                    recognition.interimResults = true;
+                    recognition.lang = 'en-US';
+
+                    recognition.onstart = () => {
+                        console.log('Speech recognition started');
+                        answerTextarea.value = ''; // Clear previous answer
+                        startButton.disabled = true;
+                        stopButton.disabled = false;
+                        isRecognizing = true;
+
+                        // Set a timeout for 1 minute (60000 milliseconds)
+                        recognitionTimeout = setTimeout(() => {
+                            if (isRecognizing) {
+                                recognition.stop();
+                                console.log('Speech recognition timed out after 1 minute.');
+                            }
+                        }, 60000);
+                    };
+
+                    recognition.onresult = (event) => {
+                        const transcript = Array.from(event.results)
+                            .map(result => result[0])
+                            .map(result => result.transcript)
+                            .join('');
+
+                        answerTextarea.value = transcript;
+                    };
+
+                    recognition.onerror = (event) => {
+                        console.error('Speech recognition error:', event.error);
+                        startButton.disabled = false;
+                        stopButton.disabled = true;
+                        isRecognizing = false;
+                    };
+
+                    recognition.onend = () => {
+                        console.log('Speech recognition ended');
+                        startButton.disabled = false;
+                        stopButton.disabled = true;
+                        isRecognizing = false;
+                        clearTimeout(recognitionTimeout); // Clear the timeout
+                    };
+
+                    recognition.start();
+                } else {
+                    console.log('Speech Recognition API is not supported in this browser.');
+                    answerTextarea.placeholder = 'Speech Recognition API is not supported in this browser.';
+                    startButton.disabled = true;
+                    stopButton.disabled = true;
+                }
+            });
+
+            stopButton.addEventListener('click', () => {
+                if (recognition && isRecognizing) {
+                    recognition.stop();
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                const answer = answerTextarea.value;
+                const formData = new FormData();
+                formData.append('answer', answer);
+
+                fetch('/submit_answer', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url; // Follow the redirect
+                    } else {
+                        // If no redirect, just go to next question
+                        window.location.href = '/next_question';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            endButton.addEventListener('click', () => {
+                window.location.href = '/end_interview';
+            });
+        });
+    </script>
+</body>
+</html>

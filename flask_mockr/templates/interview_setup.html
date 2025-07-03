@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview Setup</title>
+</head>
+<body>
+    <h1>Interview Setup</h1>
+    <form method="POST" action="{{ url_for('interview_setup') }}" enctype="multipart/form-data">
+        <label for="resume">Resume (PDF):</label><br>
+        <input type="file" id="resume" name="resume"><br><br>
+        <label for="job_title">Job Title:</label><br>
+        <input type="text" id="job_title" name="job_title"><br><br>
+        <label for="job_position">Job Position:</label><br>
+        <input type="text" id="job_position" name="job_position"><br><br>
+        <label for="exp_level">Experience Level:</label><br>
+        <select id="exp_level" name="exp_level">
+            <option value="Fresher">Fresher</option>
+            <option value="Junior">Junior</option>
+            <option value="Mid">Mid</option>
+            <option value="Senior">Senior</option>
+            <option value="Lead">Lead</option>
+        </select><br><br>
+        <label for="job_description">Job Description:</label><br>
+        <textarea id="job_description" name="job_description"></textarea><br><br>
+        <label for="stage">Interview Stage:</label><br>
+        <select id="stage" name="stage">
+            <option value="Technical">Technical</option>
+            <option value="Behavioral">Behavioral</option>
+            <option value="HR">HR</option>
+        </select><br><br>
+        <input type="submit" value="Start Interview">
+    </form>
+</body>
+</html>
